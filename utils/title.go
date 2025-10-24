@@ -9,7 +9,7 @@ import (
 func Title(title string) {
 	lgt := len(title)
 	space := "   "
-	dashN := lgt + 6 + 10
+	dashN := lgt + 6 + 30
 	dash := ""
 	for range dashN{
 		dash += "="
@@ -19,6 +19,6 @@ func Title(title string) {
 	cmd.Stdout = os.Stdout
 	cmd.Run()
 	fmt.Println(dash)
-	fmt.Printf("=====%s%s%s=====\n", space, title, space)
+	fmt.Printf("===============%s%s%s===============\n", space, title, space)
 	fmt.Printf("%s\n\n",dash)
 }
