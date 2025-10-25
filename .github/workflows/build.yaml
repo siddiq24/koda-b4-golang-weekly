@@ -1,5 +1,5 @@
-name: Build Golang App
-run-name: Build Golang app for 3 major platforms
+name: Build and Release Golang App
+run-name: Build & upload compiled binaries for multiple platforms
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
       - 'v*'
 
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,44 +16,27 @@ jobs:
 
       - name: Set up Go
         uses: actions/setup-go@v5
-        with:
-          go-version: '1.25.0'
 
       - name: Get version from tag
         run: echo "VERSION=${GITHUB_REF_NAME}" >> $GITHUB_ENV
 
-      - name: Build app for Windows amd64
-        run: GOOS=windows GOARCH=amd64 go build -o playground_${{ env.VERSION }}_windows_amd64.exe .
+      - name: Build binaries
+        run: |
+          mkdir dist
+          GOOS=windows GOARCH=amd64 go build -o dist/playground_${{ env.VERSION }}_windows_amd64.exe .
+          GOOS=linux GOARCH=amd64 go build -o dist/playground_${{ env.VERSION }}_linux_amd64 .
+          GOOS=linux GOARCH=arm64 go build -o dist/playground_${{ env.VERSION }}_linux_arm64 .
+          GOOS=darwin GOARCH=arm64 go build -o dist/playground_${{ env.VERSION }}_darwin_arm64 .
 
-      - name: Build app for Linux amd64
-        run: GOOS=linux GOARCH=amd64 go build -o playground_${{ env.VERSION }}_linux_amd64 .
-
-      - name: Build app for Linux arm64
-        run: GOOS=linux GOARCH=arm64 go build -o playground_${{ env.VERSION }}_linux_arm64 .
-
-      - name: Build app for macOS (darwin) arm64
-        run: GOOS=darwin GOARCH=arm64 go build -o playground_${{ env.VERSION }}_darwin_arm64 .
-
-      - name: Upload Windows artifact
-        uses: actions/upload-artifact@v4
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
         with:
-          name: playground_${{ env.VERSION }}_windows_amd64
-          path: ./playground_${{ env.VERSION }}_windows_amd64.exe
-
-      - name: Upload Linux amd64 artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: playground_${{ env.VERSION }}_linux_amd64
-          path: ./playground_${{ env.VERSION }}_linux_amd64
-
-      - name: Upload Linux arm64 artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: playground_${{ env.VERSION }}_linux_arm64
-          path: ./playground_${{ env.VERSION }}_linux_arm64
-
-      - name: Upload macOS artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: playground_${{ env.VERSION }}_darwin_arm64
-          path: ./playground_${{ env.VERSION }}_darwin_arm64
+          name: Release ${{ env.VERSION }}
+          tag_name: ${{ env.VERSION }}
+          files: |
+            dist/playground_${{ env.VERSION }}_windows_amd64.exe
+            dist/playground_${{ env.VERSION }}_linux_amd64
+            dist/playground_${{ env.VERSION }}_linux_arm64
+            dist/playground_${{ env.VERSION }}_darwin_arm64
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
