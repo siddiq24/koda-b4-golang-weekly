@@ -20,11 +20,12 @@ func main() {
 	}()
 
 	for {
-		utils.Title("Welcome to My System")
+		utils.Title("W E L L C O M E    T O")
 		fmt.Println("   1. Menu\n   2. Cart\n   3. History")
 		fmt.Println("\n   x. Exit")
 		fmt.Printf("\nChoose a menu: ")
 		var input string
+		
 		fmt.Scanln(&input)
 
 		switch input {

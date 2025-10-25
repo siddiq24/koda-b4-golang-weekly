@@ -30,7 +30,7 @@ func (db *Db) Cart() {
 			fmt.Println("    |                                  |       |")
 		}
 		fmt.Println("----------------------------------------------------------")
-		fmt.Printf("       TOTAL                                   | Rp.%d\n", db.Total)
+		fmt.Printf("       TOTAL                                   | Rp %d\n", db.Total)
 		fmt.Println("----------------------------------------------------------")
 	}
 
@@ -85,8 +85,8 @@ func (db *Db) Payment() {
 		utils.Title("P A Y M E N T")
 
 		var p string
-		fmt.Printf("\nTotal transaction : Rp.%d\n", db.Total)
-		fmt.Print("\nBayar : Rp.")
+		fmt.Printf("\nTotal transaction : Rp %s\n", models.ToRP(db.Total))
+		fmt.Print("\nBayar : Rp ")
 		fmt.Scanln(&p)
 		pay, er := strconv.Atoi(p)
 		if er != nil {

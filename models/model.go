@@ -5,7 +5,7 @@ import (
 )
 
 type Product struct {
-	Id int
+	Id    int
 	Name  string
 	Price uint
 }
@@ -43,7 +43,7 @@ func (p Product) PrintProduct(i int) {
 	for range 33 - len(p.Name) {
 		spaceN += " "
 	}
-	fmt.Printf("%d%s| %s%s|  Rp.%s\n", i, spaceI, p.Name, spaceN, ToRP(p.Price))
+	fmt.Printf("%d%s| %s%s|  Rp %s\n", i, spaceI, p.Name, spaceN, ToRP(p.Price))
 }
 
 func (c Cart) PrintProduct(i int) {
@@ -62,7 +62,7 @@ func (c Cart) PrintProduct(i int) {
 	if i < 0 {
 		fmt.Printf("    |                                  |       |\n")
 	} else {
-		fmt.Printf("%d%s| %s%s|   %d%s  |  Rp.%d\n", i, spaceI, c.Name, spaceN, c.Qty, spaceQ, c.Total)
+		fmt.Printf("%d%s| %s%s|   %d%s  |  Rp %s\n", i, spaceI, c.Name, spaceN, c.Qty, spaceQ, ToRP(uint(c.Total)))
 	}
 }
 
@@ -85,12 +85,12 @@ type Bill struct {
 	Change  uint
 }
 
-func ToRP(nomi uint) string{
+func ToRP(nomi uint) string {
 	nomiStr := fmt.Sprintf("%d", nomi)
 	leng := len(nomiStr)
 	result := ""
 	for i := 1; i <= leng; i++ {
-		if i%3 == 0 {
+		if (leng-i+1)%3 == 0 && i != 1 {
 			result += "."
 		}
 		result += string(nomiStr[i-1])

@@ -141,7 +141,7 @@ func (db *Db) addToCart(errr int) {
 		for i := range db.Carts {
 			if db.Carts[i].Name == product.Name {
 				db.Carts[i].Qty++
-				db.Carts[i].Total+=int(product.Price)
+				db.Carts[i].Total += int(product.Price)
 				found = true
 				break
 			}
@@ -180,11 +180,11 @@ func (db *Db) showChart(q int) {
 		total += uint(cart.Total)
 		q += cart.Qty
 	}
-	db.Total =total
+	db.Total = total
 
 	if len(db.Carts) > 0 {
 		fmt.Println("----------------------------------------------------------")
-		fmt.Printf("     TOTAL                                     | Rp.%d\n", db.Total)
+		fmt.Printf("     TOTAL                                     |  Rp %s\n", models.ToRP(db.Total))
 		fmt.Println("----------------------------------------------------------")
 	}
 }

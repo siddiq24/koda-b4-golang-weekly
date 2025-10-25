@@ -23,13 +23,13 @@ func ShowStruk(bills []models.Bill, id int) {
 	spay := ""
 	scha := ""
 	for i := range w {
-		if i < 28-len(strconv.Itoa(int(bills[id].Total))) {
+		if i < 27-len(strconv.Itoa(int(bills[id].Total))) {
 			stot += " "
 		}
-		if i < 23-len(strconv.Itoa(int(bills[id].Bayar))) {
+		if i < 22-len(strconv.Itoa(int(bills[id].Bayar))) {
 			spay += " "
 		}
-		if i < 27-len(strconv.Itoa(int(bills[id].Change))) {
+		if i < 26-len(strconv.Itoa(int(bills[id].Change))) {
 			scha += " "
 		}
 		if i < w/2-2 {
@@ -46,8 +46,8 @@ func ShowStruk(bills []models.Bill, id int) {
 	Print(fmt.Sprintf("%s|%sBILL%s|", s, space, space))
 	Print(fmt.Sprintf("%s|%s|", s, dash))
 	Print(fmt.Sprintf("%s| Order Number: %s           |", s, bills[id].Invoice))
-	Print(fmt.Sprintf("%s| %s                        |", s, bills[id].Date))
-	Print(fmt.Sprintf("%s| %s                           |", s, bills[id].Time))
+	Print(fmt.Sprintf("%s| Date        :%s           |", s, bills[id].Date))
+	Print(fmt.Sprintf("%s| Time        :%s              |", s, bills[id].Time))
 	Print(fmt.Sprintf("%s|%s|", s, dash))
 
 	iniChan := make(chan string, len(bills[id].Carts)*3)
@@ -70,10 +70,10 @@ func ShowStruk(bills []models.Bill, id int) {
 	Print(fmt.Sprintf("%s|%s|", s, dash))
 	Print(fmt.Sprintf("%s|  Total Item %d                          |", s, totI))
 	Print(fmt.Sprintf("%s|%s|", s, dash))
-	Print(fmt.Sprintf("%s|  Total%sRp.%d  |", s, stot, totP))
+	Print(fmt.Sprintf("%s|  Total%sRp %s  |", s, stot, ToRP(totP)))
 	Print(fmt.Sprintf("%s|  Payment:                              |", s))
-	Print(fmt.Sprintf("%s|     %s%sRp.%d  |", s, bills[id].Payment, spay, bills[id].Bayar))
-	Print(fmt.Sprintf("%s|  Change%sRp.%d  |", s, scha, bills[id].Change))
+	Print(fmt.Sprintf("%s|     %s%sRp.%s  |", s, bills[id].Payment, spay, ToRP(bills[id].Bayar)))
+	Print(fmt.Sprintf("%s|  Change%sRp.%s  |", s, scha, ToRP(bills[id].Change)))
 	Print(fmt.Sprintf("%s|%s%s    |", s, space, space))
 	Print(fmt.Sprintf("%s|%s%s    |", s, space, space))
 	// ============================================================
@@ -98,5 +98,5 @@ func withGor(cart models.Cart, totI *int, totP *uint, w int, s, space string, wg
 
 	ch <- fmt.Sprintf("%s|%s%s    |", s, space, space)
 	ch <- fmt.Sprintf("%s|  %s%s|", s, cart.Name, spaceName)
-	ch <- fmt.Sprintf("%s|     %d X %d                Rp.%d  |", s, cart.Qty, cart.Price, total)
+	ch <- fmt.Sprintf("%s|     %d X %s              Rp %s  |", s, cart.Qty, ToRP(cart.Price), ToRP(cart.Price))
 }
