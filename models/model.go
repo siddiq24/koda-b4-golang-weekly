@@ -5,32 +5,33 @@ import (
 )
 
 type Product struct {
+	Id int
 	Name  string
 	Price uint
 }
 
 var Products []Product = []Product{
-	{Name: "Americano", Price: 20000},
-	{Name: "Kopi Susu", Price: 24000},
-	{Name: "Latte", Price: 23000},
-	{Name: "Caramel Latte", Price: 28000},
-	{Name: "Caramel Machiato", Price: 30000},
-	{Name: "Mocha", Price: 29000},
-	{Name: "Earl Gray Tea", Price: 20000},
-	{Name: "Lemon Tea", Price: 26000},
-	{Name: "Lychee Tea", Price: 26000},
-	{Name: "Earl Gray Milk Tea", Price: 28000},
-	{Name: "Hazelnut Choco", Price: 28000},
-	{Name: "Royale Milo", Price: 30000},
-	{Name: "Milo Macchiato", Price: 30000},
-	{Name: "Americano 1L", Price: 75000},
-	{Name: "Latte 1L", Price: 90000},
-	{Name: "Kopi Susu 1L", Price: 100000},
-	{Name: "Classic Chocolate 1L", Price: 100000},
-	{Name: "Caramel Latte 1L", Price: 100000},
-	{Name: "Vanilla Latte 1L", Price: 100000},
-	{Name: "Hazelnut Latte 1L", Price: 90000},
-	{Name: "Hazelnut Choco 1L", Price: 100000},
+	{Id: 0, Name: "Americano", Price: 20000},
+	{Id: 1, Name: "Kopi Susu", Price: 24000},
+	{Id: 2, Name: "Latte", Price: 23000},
+	{Id: 3, Name: "Caramel Latte", Price: 28000},
+	{Id: 4, Name: "Caramel Machiato", Price: 30000},
+	{Id: 5, Name: "Mocha", Price: 29000},
+	{Id: 6, Name: "Earl Gray Tea", Price: 20000},
+	{Id: 7, Name: "Lemon Tea", Price: 26000},
+	{Id: 8, Name: "Lychee Tea", Price: 26000},
+	{Id: 9, Name: "Earl Gray Milk Tea", Price: 28000},
+	{Id: 10, Name: "Hazelnut Choco", Price: 28000},
+	{Id: 11, Name: "Royale Milo", Price: 30000},
+	{Id: 12, Name: "Milo Macchiato", Price: 30000},
+	{Id: 13, Name: "Americano 1L", Price: 75000},
+	{Id: 14, Name: "Latte 1L", Price: 90000},
+	{Id: 15, Name: "Kopi Susu 1L", Price: 100000},
+	{Id: 16, Name: "Classic Chocolate 1L", Price: 100000},
+	{Id: 17, Name: "Caramel Latte 1L", Price: 100000},
+	{Id: 18, Name: "Vanilla Latte 1L", Price: 100000},
+	{Id: 19, Name: "Hazelnut Latte 1L", Price: 90000},
+	{Id: 20, Name: "Hazelnut Choco 1L", Price: 100000},
 }
 
 func (p Product) PrintProduct(i int) {
@@ -42,7 +43,7 @@ func (p Product) PrintProduct(i int) {
 	for range 33 - len(p.Name) {
 		spaceN += " "
 	}
-	fmt.Printf("%d%s| %s%s|  Rp.%d\n", i, spaceI, p.Name, spaceN, p.Price)
+	fmt.Printf("%d%s| %s%s|  Rp.%s\n", i, spaceI, p.Name, spaceN, ToRP(p.Price))
 }
 
 func (c Cart) PrintProduct(i int) {
@@ -82,4 +83,17 @@ type Bill struct {
 	Total   uint
 	Bayar   uint
 	Change  uint
+}
+
+func ToRP(nomi uint) string{
+	nomiStr := fmt.Sprintf("%d", nomi)
+	leng := len(nomiStr)
+	result := ""
+	for i := 1; i <= leng; i++ {
+		if i%3 == 0 {
+			result += "."
+		}
+		result += string(nomiStr[i-1])
+	}
+	return result
 }

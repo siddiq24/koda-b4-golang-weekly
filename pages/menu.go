@@ -49,11 +49,12 @@ func (db *Db) MenuPage() {
 func (db *Db) listMenu() {
 	utils.Title("    M E N U    P R O D U C T    ")
 
-	fmt.Println("__________________________________________________")
-	fmt.Println("NO  |  NAME                            |  PRICE")
-	fmt.Println("--------------------------------------------------")
+	fmt.Println("┌─────┬──────────────────────────────────┬─────────")
+	fmt.Println("  NO  |  NAME                            |  PRICE")
+	fmt.Println("---------------------------------------------------")
 
 	for i, product := range db.Products {
+		fmt.Print("  ")
 		ShowProduct(product, i+1)
 	}
 }
