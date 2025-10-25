@@ -1,0 +1,53 @@
+name: Build Golang App
+run-name: Build golang app for 3 major platforms
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+
+      - name: Get version from tag
+        run: echo "VERSION=${GITHUB_REF_NAME}" >> $GITHUB_ENV
+
+      - name: Build app for Windows amd64
+        run: GOOS=windows GOARCH=amd64 go build -o playground_${{ env.VERSION }}_windows_amd64.exe .
+
+      - name: Build app for Linux amd64
+        run: GOOS=linux GOARCH=amd64 go build -o playground_${{ env.VERSION }}_linux_amd64 .
+
+      - name: Build app for Linux arm64
+        run: GOOS=linux GOARCH=arm64 go build -o playground_${{ env.VERSION }}_linux_arm64 .
+
+      - name: Build app for macOS (darwin) arm64
+        run: GOOS=darwin GOARCH=arm64 go build -o playground_${{ env.VERSION }}_darwin_arm64 .
+
+      - name: Upload Windows artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: playground_${{ env.VERSION }}_windows_amd64
+          path: ./playground_${{ env.VERSION }}_windows_amd64.exe
+
+      - name: Upload Linux amd64 artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: playground_${{ env.VERSION }}_linux_amd64
+          path: ./playground_${{ env.VERSION }}_linux_amd64
+
+      - name: Upload Linux arm64 artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: playground_${{ env.VERSION }}_linux_arm64
+          path: ./playground_${{ env.VERSION }}_linux_arm64
+
+      - name: Upload macOS artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: playground_${{ env.VERSION }}_darwin_arm64
+          path: ./playground_${{ env.VERSION }}_darwin_arm64
