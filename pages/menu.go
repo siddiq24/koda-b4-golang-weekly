@@ -25,33 +25,15 @@ func ShowProduct(ip InterfaceProduct, i int) {
 
 func (db *Db) MenuPage() {
 	db.Products = models.Products
-	db.listMenu()
-	fmt.Println("Total :", db.Total)
-	fmt.Print("\n>> You wanna buy? ")
-	utils.Alert("(y/n): ")
-	var choice string
-	fmt.Scanln(&choice)
-
-	switch choice {
-	case "":
-		db.addToCart(0)
-	case "y":
-		db.addToCart(0)
-		return
-	case "n":
-		panic("Its OK")
-	default:
-		utils.Alert("\nEnter the command correctly")
-		db.MenuPage()
-	}
+	db.addToCart(0)
 }
 
 func (db *Db) listMenu() {
 	utils.Title("    M E N U    P R O D U C T    ")
 
-	fmt.Println("┌─────┬──────────────────────────────────┬─────────")
+	fmt.Println("┌─────┬──────────────────────────────────┬────────────────")
 	fmt.Println("  NO  |  NAME                            |  PRICE")
-	fmt.Println("---------------------------------------------------")
+	fmt.Println("----------------------------------------------------------")
 
 	for i, product := range db.Products {
 		fmt.Print("  ")
