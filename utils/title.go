@@ -2,8 +2,6 @@ package utils
 
 import (
 	"fmt"
-	"os"
-	"os/exec"
 )
 
 func Title(title string) {
@@ -20,9 +18,7 @@ func Title(title string) {
 
 	}
 
-	cmd := exec.Command("cmd", "/c", "cls")
-	cmd.Stdout = os.Stdout
-	cmd.Run()
+	Cleaner()
 	fmt.Println(dash)
 	fmt.Printf("===============%s%s%s===============\n", space, title, space)
 	fmt.Printf("%s    %s    %s\n", spc, "J A N J I    J I W A", spc)
