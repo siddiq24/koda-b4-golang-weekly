@@ -46,8 +46,8 @@ func ShowStruk(bills []models.Bill, id int) {
 	Print(fmt.Sprintf("%s|%sBILL%s|", s, space, space))
 	Print(fmt.Sprintf("%s|%s|", s, dash))
 	Print(fmt.Sprintf("%s| Order Number: %s           |", s, bills[id].Invoice))
-	Print(fmt.Sprintf("%s| Date        :%s           |", s, bills[id].Date))
-	Print(fmt.Sprintf("%s| Time        :%s              |", s, bills[id].Time))
+	Print(fmt.Sprintf("%s| Date        : %s          |", s, bills[id].Date))
+	Print(fmt.Sprintf("%s| Time        : %s             |", s, bills[id].Time))
 	Print(fmt.Sprintf("%s|%s|", s, dash))
 
 	iniChan := make(chan string, len(bills[id].Carts)*3)
