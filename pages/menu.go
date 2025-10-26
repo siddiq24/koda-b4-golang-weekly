@@ -171,7 +171,7 @@ func (db *Db) showChart(q int) {
 	}
 }
 
-func (db Db) Exit() {
+func (db *Db) Exit() {
 	var nn string
 	if len(db.Carts) > 0 {
 		panic("\nProduct has been saved...")
