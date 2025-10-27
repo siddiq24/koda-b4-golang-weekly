@@ -13,6 +13,7 @@ type Db struct {
 	Carts    []models.Cart
 	Bills    []models.Bill
 	Total    uint
+	Temp     []models.Product
 }
 
 type InterfaceProduct interface {
@@ -23,12 +24,13 @@ func ShowProduct(ip InterfaceProduct, i int) {
 	ip.PrintProduct(i)
 }
 
+
 func (db *Db) MenuPage() {
-	db.Products = models.Products
 	db.addToCart(0)
 }
 
 func (db *Db) listMenu() {
+	db.Caching()
 	utils.Title("    M E N U    P R O D U C T    ")
 
 	fmt.Println("┌─────┬──────────────────────────────────┬────────────────")

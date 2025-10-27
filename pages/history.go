@@ -15,6 +15,10 @@ func (db *Db) History() {
 		fmt.Printf("INVOICE     :  %s\n", bill.Invoice)
 		fmt.Println("DATE        : ", bill.Date)
 		fmt.Println("PAYMENT     : ", bill.Payment)
+		fmt.Println("Products    : ")
+		for i, cart := range bill.Carts {
+			fmt.Println("    ", i+1, cart.Name," ", cart.Qty, "psc")
+		}
 		fmt.Println("")
 	}
 
