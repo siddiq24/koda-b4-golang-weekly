@@ -1,39 +1,41 @@
 package pages
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io"
-	"net/http"
 	"os"
 	"path/filepath"
 	"strconv"
 	"time"
 
+	"github.com/jackc/pgx/v5"
+	"github.com/joho/godotenv"
 	"github.com/siddiq24/golang-weekly/models"
 	"github.com/siddiq24/golang-weekly/utils"
 )
 
 func (db *Db) Fetch() []models.Product {
-	resp, err := http.Get("https://raw.githubusercontent.com/siddiq24/all-products-janji-jiwa/refs/heads/main/all-products.json")
+	err := godotenv.Load()
 	if err != nil {
-		fmt.Println("err:", err)
-		return nil
+		fmt.Println("failed to load .env file")
 	}
-	defer resp.Body.Close()
 
-	var data []models.Product
-	body, err := io.ReadAll(resp.Body)
+	conn, err := pgx.Connect(context.Background(), os.Getenv("DATABASE_URL"))
 	if err != nil {
-		fmt.Println("err:", err)
-		return nil
+		fmt.Println("failed to connect database postgres")
 	}
-	if err := json.Unmarshal(body, &data); err != nil {
-		fmt.Println("err:", err)
-		return nil
+	defer conn.Close(context.Background())
+
+	rows, _ := conn.Query(context.Background(), `select * from products`)
+	defer rows.Close()
+
+	products, err := pgx.CollectRows(rows, pgx.RowToStructByName[models.Product])
+	if err != nil {
+		fmt.Println("error collectrows\n>> ", err)
 	}
-	return data
+	return products
 }
 
 
