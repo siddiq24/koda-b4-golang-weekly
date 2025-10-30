@@ -26,11 +26,14 @@ jobs:
       - name: Get version from tag
         run: echo "VERSION=${GITHUB_REF_NAME}" >> $GITHUB_ENV
 
+      - name: Create .env file
+        run: |
+          echo "TIME=$TIME" >> .env
+          echo "DATABASE_URL=$DATABASE_URL" >> .env
+
       - name: Build binaries
         run: |
           mkdir dist
-          echo "TIME=$TIME" >> .env
-          echo "DATABASE_URL=$DATABASE_URL" >> .env
           GOOS=windows GOARCH=amd64 go build -o dist/playground_${{ env.VERSION }}_windows_amd64.exe .
           GOOS=linux GOARCH=amd64 go build -o dist/playground_${{ env.VERSION }}_linux_amd64 .
           GOOS=linux GOARCH=arm64 go build -o dist/playground_${{ env.VERSION }}_linux_arm64 .
@@ -48,3 +51,4 @@ jobs:
             dist/playground_${{ env.VERSION }}_darwin_arm64
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
