@@ -3,6 +3,7 @@ package pages
 import (
 	"fmt"
 	"log"
+	"os"
 	"strconv"
 	"time"
 
@@ -81,6 +82,8 @@ func (db *Db) Payment() {
 		log.Fatal(err)
 	}
 
+	eror := 0
+
 	for {
 		utils.Title("P A Y M E N T")
 
@@ -91,6 +94,21 @@ func (db *Db) Payment() {
 		pay, er := strconv.Atoi(p)
 		if er != nil {
 			continue
+		}
+		if pay < 0{
+			eror ++
+		}
+		
+		switch eror {
+		case 1:
+			utils.Alert("\n   => Masukkan sejumlah nilai dengan benar.....")
+			continue
+		case 2:
+			utils.Alert("\n   => Peringatan ke 2\n   => Mohon masukkan sejumlah nilai dengan benar.....")
+			continue
+		case 3:
+			utils.Alert("\n   => Anda telah melakukan kesalahan yg disengaja\n   => Maaf akun anda terblokir.....\n\n")
+			os.Exit(2)
 		}
 
 		if db.Total > uint(pay) {
@@ -110,13 +128,14 @@ func (db *Db) Payment() {
 
 		utils.Title("P A Y M E N T")
 
+		utils.Alert("\n   >> Payment Successfull..")
+		fmt.Print("\n   >> Enter to print Struk")
+		fmt.Scanln()
+		fmt.Println("\n===============================================================")
 		if len(db.Bills) > 0 {
 			utils.ShowStruk(db.Bills, len(db.Bills)-1)
 		}
 		time.Sleep(time.Second)
-		utils.Alert("\n   >> Payment Successfull..")
-		fmt.Println("\n Enter to exit")
-		fmt.Scanln()
 		db.Carts = []models.Cart{}
 		db.Total = 0
 		panic("Riwayat tersimpan di history....")
