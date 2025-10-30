@@ -10,30 +10,6 @@ type Product struct {
 	Price uint
 }
 
-var Products []Product = []Product{
-	{Id: 0, Name: "Americano", Price: 20000},
-	{Id: 1, Name: "Kopi Susu", Price: 24000},
-	{Id: 2, Name: "Latte", Price: 23000},
-	{Id: 3, Name: "Caramel Latte", Price: 28000},
-	{Id: 4, Name: "Caramel Machiato", Price: 30000},
-	{Id: 5, Name: "Mocha", Price: 29000},
-	{Id: 6, Name: "Earl Gray Tea", Price: 20000},
-	{Id: 7, Name: "Lemon Tea", Price: 26000},
-	{Id: 8, Name: "Lychee Tea", Price: 26000},
-	{Id: 9, Name: "Earl Gray Milk Tea", Price: 28000},
-	{Id: 10, Name: "Hazelnut Choco", Price: 28000},
-	{Id: 11, Name: "Royale Milo", Price: 30000},
-	{Id: 12, Name: "Milo Macchiato", Price: 30000},
-	{Id: 13, Name: "Americano 1L", Price: 75000},
-	{Id: 14, Name: "Latte 1L", Price: 90000},
-	{Id: 15, Name: "Kopi Susu 1L", Price: 100000},
-	{Id: 16, Name: "Classic Chocolate 1L", Price: 100000},
-	{Id: 17, Name: "Caramel Latte 1L", Price: 100000},
-	{Id: 18, Name: "Vanilla Latte 1L", Price: 100000},
-	{Id: 19, Name: "Hazelnut Latte 1L", Price: 90000},
-	{Id: 20, Name: "Hazelnut Choco 1L", Price: 100000},
-}
-
 func (p Product) PrintProduct(i int) {
 	spaceI := "   "
 	if i > 9 {
