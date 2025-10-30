@@ -44,8 +44,7 @@ var CacheFile string = filepath.Join(os.TempDir(), "janjiw.json")
 func (db *Db) Caching() {
 	wak, er := strconv.Atoi(os.Getenv("TIME"))
 	if er != nil{
-		utils.Alert("Gagal ambil data dari ENV")
-		return
+		wak = 15
 	}
 
 	info, err := os.Stat(CacheFile)

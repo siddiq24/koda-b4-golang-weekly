@@ -10,20 +10,21 @@ import (
 	"github.com/siddiq24/golang-weekly/utils"
 )
 
-var data pages.Db
+var data pages.Db 
 
 func init(){
 	utils.Title("W E L L C O M E    T O")
 
 	err := godotenv.Load()
     if err != nil {
-        fmt.Println("⚠️  Tidak bisa memuat file .env, lanjutkan dengan env sistem.")
+        fmt.Println("Tidak dapat memuat file .env, lanjutkan dengan env sistem.")
     }
 
 
 	wak, er := strconv.Atoi(os.Getenv("TIME"))
 	if er != nil{
 		utils.Alert("\nGagal membaca ENV")
+		wak = 15
 		utils.Alert(fmt.Sprintf("\n\nTemporary file akan diperbaharui setiap %d detik", wak))
 		return
 	}

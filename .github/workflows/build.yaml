@@ -12,6 +12,9 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
+    env:
+      TIME: ${{ secrets.TIME }}
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
     steps:
       - name: Check out repository
@@ -26,6 +29,8 @@ jobs:
       - name: Build binaries
         run: |
           mkdir dist
+          echo "TIME=$TIME" >> .env
+          echo "DATABASE_URL=$DATABASE_URL" >> .env
           GOOS=windows GOARCH=amd64 go build -o dist/playground_${{ env.VERSION }}_windows_amd64.exe .
           GOOS=linux GOARCH=amd64 go build -o dist/playground_${{ env.VERSION }}_linux_amd64 .
           GOOS=linux GOARCH=arm64 go build -o dist/playground_${{ env.VERSION }}_linux_arm64 .
